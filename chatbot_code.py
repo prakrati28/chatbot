@@ -91,7 +91,7 @@ def query_groq(prompt):
                 {"role": "system", "content": "You are a helpful assistant for Indore city information."},
                 {"role": "user", "content": prompt},
             ],
-            max_tokens=200
+            max_tokens=500
         )
         return chat_completion.choices[0].message.content
     except Exception as e:
