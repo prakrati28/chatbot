@@ -12,21 +12,20 @@ from audio_recorder_streamlit import audio_recorder
 import soundfile as sf
 import io
 
-# Initialize Speech Recognition
+# intialise speech recognition
 recognizer = sr.Recognizer()
 recognizer.energy_threshold = 4000  
 recognizer.dynamic_energy_threshold = False  
 recognizer.pause_threshold = 1.0
 
-# Loading Groq API Key 
+# loading api 
 GROQ_API_KEY = st.secrets["api_token"]
 if not GROQ_API_KEY:
-    st.error("Groq API key is missing. Please set it in Streamlit secrets.")
+    st.error("Groq API key is missing.")
 
-# Initialize Groq client
 client = Groq(api_key=GROQ_API_KEY)
 
-# Initialize SentenceTransformer for embeddings
+# initialise sentence transformer
 embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 def flatten_and_process_json(json_data, parent_key=''):
@@ -61,16 +60,15 @@ def load_knowledge_base(json_file):
         with open(json_file, "r", encoding="utf-8") as file:
             knowledge_base = json.load(file)
             
-        # Processing the knowledge base into searchable texts
         kb_texts = flatten_and_process_json(knowledge_base)
         
-        # Generating embeddings and creating FAISS index
+        # creates faiss index
         if kb_texts:
             kb_embeddings = embedding_model.encode(kb_texts)
             dimension = kb_embeddings.shape[1]
-            index = faiss.IndexFlatIP(dimension)  # Using Inner Product for cosine similarity
+            index = faiss.IndexFlatIP(dimension) 
             
-            # Normalising vectors for better cosine similarity
+            # normalise vectors
             faiss.normalize_L2(kb_embeddings)
             index.add(np.array(kb_embeddings, dtype=np.float32))
             
@@ -80,7 +78,7 @@ def load_knowledge_base(json_file):
         st.error(f"Error loading knowledge base: {str(e)}")
         return [], None
 
-# Load and process knowledge base
+
 kb_texts, index = load_knowledge_base("knowledge_base.json")
 
 def query_groq(prompt):
@@ -101,11 +99,10 @@ def generate_response(query):
     if not index:
         return "Knowledge base is empty or not indexed properly."
 
-    # Prepare query embedding
+    
     query_embedding = embedding_model.encode([query])
     faiss.normalize_L2(query_embedding)
     
-    # Search for similar contexts with more results
     k = 5  
     threshold = 0.3 
     
@@ -117,7 +114,7 @@ def generate_response(query):
             relevant_texts.append(kb_texts[idx])
     
     if not relevant_texts:
-        return query_groq(query)  # Fallback to Groq if no relevant context found
+        return query_groq(query)  
 
     context = "\n---\n".join(relevant_texts)
     
@@ -144,22 +141,20 @@ def text_to_speech(text):
 def process_audio(audio_bytes):
     if audio_bytes:
         try:
-            # Convert audio bytes to audio data using soundfile
+            # convert audio bytes to audio data 
             audio_data = io.BytesIO(audio_bytes)
             data, sample_rate = sf.read(audio_data)
             
-            # Save as WAV file with some parameters
+            # save as wav file 
             with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_audio:
                 sf.write(temp_audio.name, data, sample_rate, format='WAV')
                 temp_audio_path = temp_audio.name
 
-            # Process the audio file
+            # process audio file
             with sr.AudioFile(temp_audio_path) as source:
                 audio = recognizer.record(source)
                 
-                # Trying different recognition settings
                 try:
-                    # Trying with increased timeout and without phrase time limit
                     text = recognizer.recognize_google(
                         audio,
                         language='en-IN',
@@ -171,14 +166,13 @@ def process_audio(audio_bytes):
                 except sr.RequestError:
                     return "Sorry, there was an error with the speech recognition service."
                 finally:
-                    # Cleanup
                     os.remove(temp_audio_path)
         except Exception as e:
             st.error(f"Error processing audio: {str(e)}")
             return "Error processing audio. Please try again."
     return None
 
-# Streamlit UI
+# streamlit ui
 st.title("Indore City Guide Chatbot")
 
 st.markdown("""
@@ -201,14 +195,13 @@ for msg in st.session_state.messages:
         st.markdown(msg["content"])
 
 
-# Adding voice input button and text input side by side
+# voice input button and text input 
 col1, col2 = st.columns([3, 1])
 
 with col1:
     user_message = st.chat_input("Type your message here...")
 
 with col2:
-    # Adding audio recorder with a custom button
     audio_bytes = audio_recorder(
         text="🎤",
         recording_color="#e8b62c",
@@ -221,40 +214,33 @@ with col2:
     )
     
     if audio_bytes:
-        # Processing audio and converting it to text
         transcribed_text = process_audio(audio_bytes)
         if transcribed_text and transcribed_text != "Sorry, I couldn't understand the audio." and transcribed_text != "Sorry, there was an error with the speech recognition service.":
-            # Display user message
+            # user message
             st.session_state.messages.append({"role": "user", "content": transcribed_text})
             with st.chat_message("user"):
                 st.markdown(transcribed_text)
 
-            # Generate chatbot response
+            # chatbot response
             chatbot_response = generate_response(transcribed_text)
             st.session_state.messages.append({"role": "assistant", "content": chatbot_response})
 
-            # Display chatbot response
             with st.chat_message("assistant"):
                 st.markdown(chatbot_response)
 
-            # Convert response to speech
             text_to_speech(chatbot_response)
         elif transcribed_text:
             st.error(transcribed_text)
 
 if user_message:
-    # Display user message
     st.session_state.messages.append({"role": "user", "content": user_message})
     with st.chat_message("user"):
         st.markdown(user_message)
 
-    # Generate chatbot response
     chatbot_response = generate_response(user_message)
     st.session_state.messages.append({"role": "assistant", "content": chatbot_response})
 
-    # Display chatbot response
     with st.chat_message("assistant"):
         st.markdown(chatbot_response)
 
-    # Convert response to speech
     text_to_speech(chatbot_response)
