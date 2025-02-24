@@ -5,7 +5,7 @@ The Indore City Guide Chatbot is an AI-powered virtual assistant designed to pro
 
 ## Core functionalities
 
-- Conversational AI with natural language understanding
+
 - Voice input and output capabilities
 - Context-aware response generation
 - Real-time speech-to-text conversion
@@ -17,7 +17,6 @@ The Indore City Guide Chatbot is an AI-powered virtual assistant designed to pro
   ### Frontend
 - Streamlit: For the web-based user interface
 - Audio Recorder Streamlit: Captures voice input
-- Interactive chat components: Enables seamless conversations
 
   ### Backend
 - FAISS: Efficient vector similarity search for knowledge retrieval
@@ -48,3 +47,10 @@ The chatbot will provide a response both in text and speech.
   -  Streamlit UI Refinements
   -  Audio Processing Enhancements
   -  More information in the knowledge base
+  - Multilingual Support
+  - More advanced TTS with emotion detection
+
+## Resources I Followed 
+  - (https://youtu.be/Ylz779Op9Pw?si=nGxflQnLrFdp0axh)
+  - (https://youtu.be/5sLYAQS9sWQ?si=0xmlL9QCq2TxC-lM)
+  
