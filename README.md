@@ -50,7 +50,3 @@ The chatbot will provide a response both in text and speech.
   - Multilingual Support
   - More advanced TTS with emotion detection
 
-## Resources I Followed 
-  - (https://youtu.be/Ylz779Op9Pw?si=nGxflQnLrFdp0axh)
-  - (https://youtu.be/5sLYAQS9sWQ?si=0xmlL9QCq2TxC-lM)
-  
