@@ -58,9 +58,9 @@ def flatten_and_process_json(json_data, parent_key=''):
 def load_knowledge_base(json_file):
     try:
         with open(json_file, "r", encoding="utf-8") as file:
-            knowledge_base = json.load(file)
+            cricket = json.load(file)
             
-        kb_texts = flatten_and_process_json(knowledge_base)
+        kb_texts = flatten_and_process_json(cricket)
         
         # creates faiss index
         if kb_texts:
@@ -79,14 +79,14 @@ def load_knowledge_base(json_file):
         return [], None
 
 
-kb_texts, index = load_knowledge_base("knowledge_base.json")
+kb_texts, index = load_knowledge_base("cricket.json")
 
 def query_groq(prompt):
     try:
         chat_completion = client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant for Indore city information."},
+                {"role": "system", "content": "You are a cricket-based AI Agent to answer any complex queries of the user."},
                 {"role": "user", "content": prompt},
             ],
             max_tokens=500
@@ -118,7 +118,7 @@ def generate_response(query):
 
     context = "\n---\n".join(relevant_texts)
     
-    prompt = f"""Based on the following information about Indore, please answer the user's question.
+    prompt = f"""Based on the following information about cricket, please answer the user's question.
 Consider all relevant details from the provided context to give a comprehensive answer.
 
 Context:
@@ -126,7 +126,7 @@ Context:
 
 Question: {query}
 
-Please provide a detailed answer using ONLY the information available in the context above."""
+Please provide a detailed answer using  the information available in the context above. if you don't get answer from knowledge base use llm api to answer"""
     
     return query_groq(prompt)
 
