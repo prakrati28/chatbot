@@ -58,9 +58,9 @@ def flatten_and_process_json(json_data, parent_key=''):
 def load_knowledge_base(json_file):
     try:
         with open(json_file, "r", encoding="utf-8") as file:
-            cricket = json.load(file)
+            knowledge_base = json.load(file)
             
-        kb_texts = flatten_and_process_json(cricket)
+        kb_texts = flatten_and_process_json(knowledge_base)
         
         # creates faiss index
         if kb_texts:
@@ -79,7 +79,7 @@ def load_knowledge_base(json_file):
         return [], None
 
 
-kb_texts, index = load_knowledge_base("cricket.json")
+kb_texts, index = load_knowledge_base("knowledge_base.json")
 
 def query_groq(prompt):
     try:
