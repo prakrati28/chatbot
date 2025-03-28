@@ -36,11 +36,8 @@
         "platforms": ["Web app", "Mobile app", "Telegram bot"],
         "hosting": "AWS/GCP/Azure",
         "API_support": "Provides REST and GraphQL APIs"
-    },
-    "challenges": [
-        "Handling complex cricket queries.",
-        "Maintaining real-time accuracy.",
-        "Efficient web scraping without getting blocked."]
+    }
+
     
 }
 
