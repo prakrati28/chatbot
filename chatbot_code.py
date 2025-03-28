@@ -86,7 +86,7 @@ def query_groq(prompt):
         chat_completion = client.chat.completions.create(
             model="llama3-70b-8192",
             messages=[
-                {"role": "system", "content": "You are a cricket-based AI Agent to answer any complex queries of the user."},
+                {"role": "system", "content": "You are a helpful assistant for Indore city information."},
                 {"role": "user", "content": prompt},
             ],
             max_tokens=500
@@ -118,7 +118,7 @@ def generate_response(query):
 
     context = "\n---\n".join(relevant_texts)
     
-    prompt = f"""Based on the following information about cricket, please answer the user's question.
+    prompt = f"""Based on the following information about Indore, please answer the user's question.
 Consider all relevant details from the provided context to give a comprehensive answer.
 
 Context:
@@ -126,7 +126,7 @@ Context:
 
 Question: {query}
 
-Please provide a detailed answer using  the information available in the context above. if you don't get answer from knowledge base use llm api to answer"""
+Please provide a detailed answer using ONLY the information available in the context above."""
     
     return query_groq(prompt)
 
@@ -173,10 +173,18 @@ def process_audio(audio_bytes):
     return None
 
 # streamlit ui
-st.title("CricBot")
+st.title("Indore City Guide Chatbot")
 
 st.markdown("""
-Welcome to Cricket AI agent!  
+
+ Welcome to the Indore City Guide!  
+ Discover everything about Indore with ease. I can assist you with:  
+ - Must-visit tourist attractions  
+ - Best local food and restaurants    
+ - Healthcare  
+ - And much more!  
+ 
+ Ask me anything about Indore, and I'll be happy to help!  
  
 """)
 
