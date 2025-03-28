@@ -37,7 +37,8 @@
         "hosting": "AWS/GCP/Azure",
         "API_support": "Provides REST and GraphQL APIs"
     }
-
-    
 }
+
+
+
 
