@@ -173,17 +173,11 @@ def process_audio(audio_bytes):
     return None
 
 # streamlit ui
-st.title("Indore City Guide Chatbot")
+st.title("CricBot")
 
 st.markdown("""
-Welcome to the Indore City Guide!  
-Discover everything about Indore with ease. I can assist you with:  
-- Must-visit tourist attractions  
-- Best local food and restaurants    
-- Healthcare  
-- And much more!  
-
-Ask me anything about Indore, and I'll be happy to help! 
+Welcome to Cricket AI agent!  
+ 
 """)
 
 if "messages" not in st.session_state:
