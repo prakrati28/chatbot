@@ -1,1 +1,46 @@
+{
+    "project": "CricBot AI Agent",
+    "description": "An AI-powered cricket chatbot that answers complex queries about cricket using web scraping and open-source models.",
+    "goals": [
+        "Provide accurate cricket-related answers.",
+        "Enhance query complexity handling.",
+        "Use web scraping for real-time data.",
+        "Utilize open-source models for insights."
+    ],
+    "features": {
+        "natural_language_processing": "Understands cricket-related questions and provides relevant responses.",
+        "real_time_data": "Uses web scraping to fetch live match statistics.",
+        "historical_data": "Accesses past player statistics and match records.",
+        "comparative_analysis": "Compares player performances based on various parameters.",
+        "prediction_capability": "Estimates future performance trends using machine learning."
+    },
+    "example_queries": [
+        {
+            "query": "Is Virat Kohli going to beat Sachin in a 1v1?",
+            "response": "Based on historical data, Kohli has an impressive record, but Sachin’s legacy remains unmatched in certain aspects."
+        },
+        {
+            "query": "MS Dhoni runs against leg spinners and fast bowlers?",
+            "response": "Dhoni averages higher against fast bowlers compared to leg spinners. His strike rate against leg spin is 120.5, while against pace bowlers, it is 140.2."
+        }
+    ],
+    "technologies_used": {
+        "web_scraping": ["BeautifulSoup", "Scrapy"],
+        "machine_learning": ["Scikit-learn", "TensorFlow"],
+        "NLP_models": ["GPT-based models", "BERT"],
+        "databases": ["MongoDB", "PostgreSQL"],
+        "frontend": ["React.js", "Streamlit"],
+        "backend": ["Flask", "FastAPI"]
+    },
+    "deployment": {
+        "platforms": ["Web app", "Mobile app", "Telegram bot"],
+        "hosting": "AWS/GCP/Azure",
+        "API_support": "Provides REST and GraphQL APIs"
+    },
+    "challenges": [
+        "Handling complex cricket queries.",
+        "Maintaining real-time accuracy.",
+        "Efficient web scraping without getting blocked."
+    ]
+}
 
