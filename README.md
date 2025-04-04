@@ -30,9 +30,7 @@ The Indore City Guide Chatbot is an AI-powered virtual assistant designed to pro
 
 
 ## Instruction to run the project
- Access the Chatbot
-🔗 URL: chatbot-itjggf48ctxgfleghwxxu8.streamlit.app
-
+[Access the Chatbot🔗 URL](https://chatbot-itjggf48ctxgfleghwxxu8.streamlit.app/)
 Simply click on the link to access the chatbot. You can interact with it in two ways:
 
 Text Input: Type your query in the chatbox and press Enter.
